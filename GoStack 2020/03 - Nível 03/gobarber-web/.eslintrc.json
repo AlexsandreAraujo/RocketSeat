@@ -28,6 +28,7 @@
         "@typescript-eslint/no-use-before-define": [
             "error"
         ],
+        "react/jsx-no-bind": "off",
         "react/react-in-jsx-scope": "off",
         "prettier/prettier": "error",
         "react/jsx-one-expression-per-line": "off",
