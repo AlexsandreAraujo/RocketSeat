@@ -6,7 +6,7 @@ import SingUp from './pages/Signup';
 
 const App: React.FC = () => (
     <>
-        <SingUp />
+        <SingIn />
         <GlobalStyle />
     </>
 );
