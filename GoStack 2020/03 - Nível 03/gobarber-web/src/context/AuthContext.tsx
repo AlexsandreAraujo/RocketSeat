@@ -20,9 +20,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextData>(
-    {} as AuthContextData,
-);
+const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
     const [data, setData] = useState<AuthState>(() => {
@@ -55,3 +53,13 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         </AuthContext.Provider>
     );
 };
+
+export function useAuth(): AuthContextData {
+    const context = useContext(AuthContext);
+
+    if (!context) {
+        throw new Error('useAuth must be used whithin an AuthProvider');
+    }
+
+    return context;
+}
