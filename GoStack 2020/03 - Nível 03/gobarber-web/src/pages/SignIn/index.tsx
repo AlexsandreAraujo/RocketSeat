@@ -43,10 +43,13 @@ const SingIn: React.FC = () => {
                     password: data.password,
                 });
             } catch (err) {
-                // eslint-disable-next-line
-            //@ts-ignore
-                const errors = getValidationErrors(err);
-                formRef.current?.setErrors(errors);
+                if (err instanceof Yup.ValidationError) {
+                    // eslint-disable-next-line
+                    //@ts-ignore
+                    const errors = getValidationErrors(err);
+                    formRef.current?.setErrors(errors);
+                }
+                // disparar um toast
             }
         },
         [signIn],
