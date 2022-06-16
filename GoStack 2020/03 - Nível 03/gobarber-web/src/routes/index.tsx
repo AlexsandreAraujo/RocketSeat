@@ -1,13 +1,21 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+
+import PrivateRoute from './Route';
 
 import SingIn from '../pages/SignIn';
 import SingUp from '../pages/Signup';
+import Dashboard from '../pages/Dashboard';
 
 const RoutesProject: React.FC = () => (
     <Routes>
-        <Route path="/" element={<SingIn />} />
-        <Route path="/singup" element={<SingUp />} />
+        <Route element={<PrivateRoute isSignInPage />}>
+            <Route path="/" element={<SingIn />} />
+        </Route>
+        <Route element={<PrivateRoute isPrivate />}>
+            <Route path="/singup" element={<SingUp />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
     </Routes>
 );
 
