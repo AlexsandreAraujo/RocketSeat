@@ -12,8 +12,8 @@ const RoutesProject: React.FC = () => (
         <Route element={<PrivateRoute isSignInPage />}>
             <Route path="/" element={<SingIn />} />
         </Route>
+        <Route path="/singup" element={<SingUp />} />
         <Route element={<PrivateRoute isPrivate />}>
-            <Route path="/singup" element={<SingUp />} />
             <Route path="/dashboard" element={<Dashboard />} />
         </Route>
     </Routes>
