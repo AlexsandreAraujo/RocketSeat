@@ -5,6 +5,7 @@ import {
   Platform,
   ScrollView,
   View,
+  TextInput,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
@@ -21,6 +22,8 @@ interface Nav {
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const emailInputRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInput>(null);
   const navigation = useNavigation<Nav>();
   return (
     <>
@@ -44,9 +47,39 @@ const SignUp: React.FC = () => {
                 console.log(data);
               }}
             >
-              <Input name="name" icon="user" placeholder="Nome" />
-              <Input name="email" icon="mail" placeholder="E-mail" />
-              <Input name="password" icon="lock" placeholder="Senha" />
+              <Input
+                autoCapitalize="words"
+                name="name"
+                icon="user"
+                placeholder="Nome"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  emailInputRef.current?.focus();
+                }}
+              />
+              <Input
+                ref={emailInputRef}
+                keyboardType="email-address"
+                autoCorrect={false}
+                autoCapitalize="none"
+                name="email"
+                icon="mail"
+                placeholder="E-mail"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus();
+                }}
+              />
+              <Input
+                ref={passwordInputRef}
+                secureTextEntry
+                textContentType="newPassword"
+                name="password"
+                icon="lock"
+                placeholder="Senha"
+                returnKeyType="send"
+                onSubmitEditing={() => formRef.current?.submitForm()}
+              />
             </Form>
             <Button onPress={() => formRef.current?.submitForm()}>
               Entrar
