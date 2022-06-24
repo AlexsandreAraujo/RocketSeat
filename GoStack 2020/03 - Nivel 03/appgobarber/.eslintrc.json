@@ -51,7 +51,8 @@
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": "error",
     "react/function-component-definition": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-no-constructed-context-values": "off"
   },
   "settings": {
     "import/resolver": {
