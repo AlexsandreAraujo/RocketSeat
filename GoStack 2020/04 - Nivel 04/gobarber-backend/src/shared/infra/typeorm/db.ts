@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
-import Appointment from '../models/Appointment';
-import User from '../models/User';
+import User from '@modules/users/infra/typeorm/entities/User';
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 
 const AppDataSource = new DataSource({
     type: 'postgres',

@@ -1,9 +1,9 @@
 import patch from 'path';
 import fs from 'fs';
-import AppDataSource from '../database/db';
-import User from '../models/User';
-import UploadConfig from '../config/upload';
-import AppError from '../errors/AppError';
+import AppDataSource from '@shared/infra/typeorm/db';
+import User from '@modules/users/infra/typeorm/entities/User';
+import UploadConfig from '@config/upload';
+import AppError from '@shared/errors/AppError';
 
 interface Request {
     id: string;

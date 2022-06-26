@@ -1,5 +1,5 @@
-import AppDataSource from '../../../database/db';
-import Appointment from '../entities/Appointment';
+import AppDataSource from '@shared/infra/typeorm/db';
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 
 class AppointmentsRepository {
     appointmentsRepository = AppDataSource.getRepository(Appointment).extend({
