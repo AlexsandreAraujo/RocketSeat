@@ -2,15 +2,15 @@ import { startOfHour } from 'date-fns';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import AppError from '@shared/errors/AppError';
-import AppointmentsRepository from '@modules/appointments/repositories/AppointmentsRepository';
+import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
 
-interface Request {
+interface IRequest {
     providerId: string;
     date: Date;
 }
 
 class CreateAppointmentService {
-    public async execute({ date, providerId }: Request): Promise<Appointment> {
+    public async execute({ date, providerId }: IRequest): Promise<Appointment> {
         if (!providerId) {
             throw new AppError('Please insert the providerId');
         }
@@ -30,8 +30,6 @@ class CreateAppointmentService {
             provider_id: providerId,
             date: appointmentDate,
         });
-
-        await appointmentsRepository.save(appointment);
 
         return appointment;
     }
