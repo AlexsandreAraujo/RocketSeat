@@ -9,7 +9,7 @@ const AppDataSource = new DataSource({
     password: 'alexla@1',
     port: 5432,
     database: 'gostack_gobarber',
-    migrations: ['./src/database/migrations/**/*{.ts,.js}'],
+    migrations: ['./src/shared/infra/typeorm/migrations/**/*{.ts,.js}'],
     entities: [Appointment, User],
 });
 

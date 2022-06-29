@@ -7,10 +7,7 @@ import AppointmentsRepository from '@modules/appointments/infra/typeorm/reposito
 
 const appointmentsRouter = Router();
 
-const appointmentsRepository = new AppointmentsRepository();
-
 appointmentsRouter.use(ensureAuthenticated);
-
 // Rotas devem Receber a requisição, chamar outro arquivo, devolver uma resposta
 
 appointmentsRouter.get('/', async (request, response) => {
@@ -21,6 +18,7 @@ appointmentsRouter.get('/', async (request, response) => {
 
 appointmentsRouter.post('/', async (request, response) => {
     const { providerId, date } = request.body;
+    const appointmentsRepository = new AppointmentsRepository();
 
     const parsedDate = parseISO(date);
 
