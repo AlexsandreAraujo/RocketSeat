@@ -5,35 +5,33 @@ import { Repository } from 'typeorm';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 
 class AppointmentsRepository implements IAppoitmentsRepository {
-    private ormRepository: Repository<Appointment>;
+  private ormRepository: Repository<Appointment>;
 
-    constructor() {
-        this.ormRepository = AppDataSource.getRepository(Appointment);
-    }
+  constructor() {
+    this.ormRepository = AppDataSource.getRepository(Appointment);
+  }
 
-    appointmentsRepository = AppDataSource.getRepository(Appointment).extend({
-        async findByDate(date: Date): Promise<Appointment | undefined> {
-            const findAppointment = await this.findOne({
-                where: { date },
-            });
-
-            return findAppointment;
-        },
+  public async findByDate(date: Date): Promise<Appointment | undefined> {
+    const findAppointment = await this.ormRepository.findOne({
+      where: { date },
     });
 
-    public async create({
-        provider_id,
-        date,
-    }: ICreateAppointmentDTO): Promise<Appointment> {
-        const appointment = this.ormRepository.create({
-            provider_id,
-            date,
-        });
+    return findAppointment;
+  }
 
-        await AppDataSource.getRepository(Appointment).save(appointment);
+  public async create({
+    provider_id,
+    date,
+  }: ICreateAppointmentDTO): Promise<Appointment> {
+    const appointment = this.ormRepository.create({
+      provider_id,
+      date,
+    });
 
-        return appointment;
-    }
+    await this.ormRepository.save(appointment);
+
+    return appointment;
+  }
 }
 
 export default AppointmentsRepository;
