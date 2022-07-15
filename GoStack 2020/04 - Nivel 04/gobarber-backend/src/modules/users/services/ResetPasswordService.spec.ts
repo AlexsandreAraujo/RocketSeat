@@ -6,7 +6,7 @@ import ResetPasswordService from './ResetPasswordService';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeUserTokensRepository: FakeUserTokensRepository;
-let ResetPassword: ResetPasswordService;
+let resetPassword: ResetPasswordService;
 let fakeHashProvider: FakeHashProvider;
 
 describe('ResetPasswordService', () => {
@@ -15,7 +15,7 @@ describe('ResetPasswordService', () => {
     fakeUserTokensRepository = new FakeUserTokensRepository();
     fakeHashProvider = new FakeHashProvider();
 
-    ResetPassword = new ResetPasswordService(
+    resetPassword = new ResetPasswordService(
       fakeUsersRepository,
       fakeUserTokensRepository,
       fakeHashProvider,
@@ -33,7 +33,7 @@ describe('ResetPasswordService', () => {
 
     const generateHash = jest.spyOn(fakeHashProvider, 'generateHash');
 
-    await ResetPassword.execute({
+    await resetPassword.execute({
       password: '123123',
       token,
     });
@@ -46,7 +46,7 @@ describe('ResetPasswordService', () => {
 
   it('Shoud not be able to reset password with non-existing token', async () => {
     await expect(
-      ResetPassword.execute({
+      resetPassword.execute({
         token: 'non-existing-token',
         password: '123456',
       }),
@@ -59,9 +59,31 @@ describe('ResetPasswordService', () => {
     );
 
     await expect(
-      ResetPassword.execute({
+      resetPassword.execute({
         token,
         password: '123456',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('Shoud not be able to reset the password if passed more than 2 hours', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'Alexsandre',
+      email: 'alexsandre@aaag.com',
+      password: '123456',
+    });
+
+    const { token } = await fakeUserTokensRepository.generate(user.id);
+
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      const customDate = new Date();
+      return customDate.setHours(customDate.getHours() + 3);
+    });
+
+    expect(
+      resetPassword.execute({
+        password: '123123',
+        token,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
