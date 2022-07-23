@@ -2,13 +2,18 @@ import AppError from '@shared/errors/AppError';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import CreateAppoitmentsService from './CreateAppointmentService';
 
+let fakeAppointmentsRepository: FakeAppointmentsRepository;
+let createAppointment: CreateAppoitmentsService;
+
 describe('CreateAppointment', () => {
-  it('Shoud be able to create a new appointment', async () => {
-    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    const createAppointment = new CreateAppoitmentsService(
+  beforeEach(() => {
+    fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    createAppointment = new CreateAppoitmentsService(
       fakeAppointmentsRepository,
     );
+  });
 
+  it('Shoud be able to create a new appointment', async () => {
     const appointment = await createAppointment.execute({
       date: new Date(),
       providerId: '1234567',
@@ -19,10 +24,6 @@ describe('CreateAppointment', () => {
   });
 
   it('shoud not be able to create two appointments on the same time', async () => {
-    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    const createAppointment = new CreateAppoitmentsService(
-      fakeAppointmentsRepository,
-    );
     const appointmentDate = new Date();
 
     await createAppointment.execute({
@@ -39,10 +40,6 @@ describe('CreateAppointment', () => {
   });
 
   it('shoud not be able to create appointments with a not valid providerId', async () => {
-    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    const createAppointment = new CreateAppoitmentsService(
-      fakeAppointmentsRepository,
-    );
     const appointmentDate = new Date();
 
     await expect(

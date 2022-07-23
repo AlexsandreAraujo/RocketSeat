@@ -4,16 +4,23 @@ import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import AuthenticateUsersService from './AuthenticateUserService';
 import CreateUserService from './CreateUserService';
 
-describe('AuthenticateUser', () => {
-  it('Shoud be able to Authenticate', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
+let fakeUsersRepository: FakeUsersRepository;
+let fakeHashProvider: FakeHashProvider;
+let AuthenticateUser: AuthenticateUsersService;
 
-    const createUser = new CreateUserService(
+describe('AuthenticateUser', () => {
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository();
+    fakeHashProvider = new FakeHashProvider();
+
+    AuthenticateUser = new AuthenticateUsersService(
       fakeUsersRepository,
       fakeHashProvider,
     );
-    const AuthenticateUser = new AuthenticateUsersService(
+  });
+
+  it('Shoud be able to Authenticate', async () => {
+    const createUser = new CreateUserService(
       fakeUsersRepository,
       fakeHashProvider,
     );
@@ -34,14 +41,6 @@ describe('AuthenticateUser', () => {
   });
 
   it('Shoud not be able to authenticate with non existing user', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-
-    const AuthenticateUser = new AuthenticateUsersService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-
     await expect(
       AuthenticateUser.execute({
         email: 'alexsandre@aaag.com',
@@ -51,18 +50,10 @@ describe('AuthenticateUser', () => {
   });
 
   it('Shoud not be able to authenticate with wrong password', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-
     const createUser = new CreateUserService(
       fakeUsersRepository,
       fakeHashProvider,
     );
-    const AuthenticateUser = new AuthenticateUsersService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-
     await createUser.execute({
       name: 'Alex',
       email: 'alexsandre@aaag.com',
