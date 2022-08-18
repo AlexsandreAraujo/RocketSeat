@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import AppDataSource from '@shared/infra/typeorm/db';
+import { AppDataSource } from '@shared/infra/typeorm/db';
 import UserToken from '@modules/users/infra/typeorm/entities/UserToken';
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 

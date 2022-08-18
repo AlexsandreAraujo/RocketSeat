@@ -1,5 +1,5 @@
 import { Not, Repository } from 'typeorm';
-import AppDataSource from '@shared/infra/typeorm/db';
+import { AppDataSource } from '@shared/infra/typeorm/db';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import User from '@modules/users/infra/typeorm/entities/User';

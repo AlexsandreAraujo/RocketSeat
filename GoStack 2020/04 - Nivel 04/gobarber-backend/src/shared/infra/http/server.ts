@@ -4,7 +4,7 @@ import 'express-async-errors';
 import cors from 'cors';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
-import AppDataSource from '@shared/infra/typeorm/db';
+import { AppDataSource, AppDataSourceMongo } from '@shared/infra/typeorm/db';
 import routes from './routes';
 import '@shared/container';
 
@@ -32,6 +32,7 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
 
 async function main() {
   await AppDataSource.initialize();
+  await AppDataSourceMongo.initialize();
   app.listen(3333, () => {
     console.log('🚀 Server started on port 3333');
   });

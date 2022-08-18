@@ -1,4 +1,4 @@
-import AppDataSource from '@shared/infra/typeorm/db';
+import { AppDataSource } from '@shared/infra/typeorm/db';
 import IAppoitmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import { Raw, Repository } from 'typeorm';
