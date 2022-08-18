@@ -7,17 +7,22 @@ import IAppoitmentsRepository from '../repositories/IAppointmentsRepository';
 
 interface IRequest {
   providerId: string;
+  user_id: string;
   date: Date;
 }
 
 @injectable()
 class CreateAppointmentService {
   constructor(
-    @inject('AppoitmentsRepository')
+    @inject('AppointmentsRepository')
     private appointmentsRepository: IAppoitmentsRepository,
   ) {}
 
-  public async execute({ date, providerId }: IRequest): Promise<Appointment> {
+  public async execute({
+    date,
+    providerId,
+    user_id,
+  }: IRequest): Promise<Appointment> {
     if (!providerId) {
       throw new AppError('Please insert the providerId');
     }
@@ -33,6 +38,7 @@ class CreateAppointmentService {
 
     const appointment = this.appointmentsRepository.create({
       provider_id: providerId,
+      user_id,
       date: appointmentDate,
     });
 
