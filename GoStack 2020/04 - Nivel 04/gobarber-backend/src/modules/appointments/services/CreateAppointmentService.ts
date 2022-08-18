@@ -1,4 +1,4 @@
-import { startOfHour } from 'date-fns';
+import { getHours, isBefore, startOfHour } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
@@ -28,6 +28,22 @@ class CreateAppointmentService {
     }
 
     const appointmentDate = startOfHour(date);
+
+    if (isBefore(appointmentDate, Date.now())) {
+      throw new AppError("You can't create a appointment on a past date");
+    }
+
+    if (user_id === providerId) {
+      throw new AppError(
+        "You can't create a appointment with the same user as provider",
+      );
+    }
+
+    if (getHours(appointmentDate) < 8 || getHours(appointmentDate) > 17) {
+      throw new AppError(
+        "You can't create a appointment before 8am and after 5pm",
+      );
+    }
 
     const findAppointmentInSameDate =
       await this.appointmentsRepository.findByDate(appointmentDate);
