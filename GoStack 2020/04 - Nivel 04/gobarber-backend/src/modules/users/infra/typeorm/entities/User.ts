@@ -7,6 +7,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { Exclude, Expose } from 'class-transformer';
+
+import 'dotenv/config';
+
 @Entity('users')
 class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -19,6 +23,7 @@ class User extends BaseEntity {
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column()
@@ -29,6 +34,13 @@ class User extends BaseEntity {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'avatar_url' })
+  getAvatarUrl(): string | null {
+    return this.avatar
+      ? `${process.env.APP_API_URL}/files/${this.avatar}`
+      : null;
+  }
 }
 
 export default User;
