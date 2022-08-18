@@ -29,7 +29,7 @@ describe('CreateAppointment', () => {
   });
 
   it('shoud not be able to create two appointments on the same time', async () => {
-    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+    jest.spyOn(Date, 'now').mockImplementation(() => {
       return new Date(2022, 4, 10, 12).getTime();
     });
 
@@ -71,7 +71,7 @@ describe('CreateAppointment', () => {
       createAppointment.execute({
         date: new Date(2022, 4, 10, 11),
         user_id: 'user-id',
-        providerId: '',
+        providerId: 'provider-id',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
