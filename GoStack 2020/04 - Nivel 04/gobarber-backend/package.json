@@ -11,6 +11,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.150.0",
+    "@aws-sdk/credential-provider-node": "^3.150.0",
     "@types/express": "^4.17.13",
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.1",
