@@ -1,7 +1,8 @@
-import nodemailer, { Transporter } from 'nodemailer';
+// import nodemailer, { Transporter } from 'nodemailer';
+import { Transporter } from 'nodemailer';
 import { injectable, inject } from 'tsyringe';
-import aws from '@aws-sdk/client-ses';
-import { defaultProvider } from '@aws-sdk/credential-provider-node';
+// import aws from '@aws-sdk/client-ses';
+// import { defaultProvider } from '@aws-sdk/credential-provider-node';
 import mailConfig from '@config/mail';
 import IMailTemplateProvider from '../../MailTemplateProvider/models/IMailTemplateProvider';
 import ISendEmailDTO from '../dto/ISendEmailDTO';
@@ -15,15 +16,14 @@ export default class SESMailProvider implements IMailProvider {
     @inject('MailTemplateProvider')
     private mailTemplateProvider: IMailTemplateProvider,
   ) {
-    const ses = new aws.SES({
-      apiVersion: '2010-12-01',
-      region: 'us-east-1',
-      credentialDefaultProvider: defaultProvider,
-    });
-
-    this.client = nodemailer.createTransport({
-      SES: { ses, aws },
-    });
+    // const ses = new aws.SES({
+    //   apiVersion: '2010-12-01',
+    //   region: 'us-east-1',
+    //   credentialDefaultProvider: defaultProvider,
+    // });
+    // this.client = nodemailer.createTransport({
+    //   SES: { ses, aws },
+    // });
   }
 
   public async sendMail({
